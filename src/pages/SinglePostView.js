@@ -40,6 +40,8 @@ export function SinglePostView(props) {
                     <h2>{post.title}</h2>
                     <p>{post._id}</p>
                     <p>{post.content}</p>
+                    <p>{post.tags}</p>
+                    <p>{post.date}</p>
                 </div>
             );
         } else {

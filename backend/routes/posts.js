@@ -10,26 +10,17 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-    const title = req.body.title;
-    const body = req.body.body;
-    const images = req.body.images;
-    const tags = req.body.tags;
-    const date = Date.parse(req.body.date);
-
-    const newPost = new Post({
-        title,
-        body,
-        images,
-        tags,
-        date
+    let newPost = new Post({
+        title: req.body.title,
+        body: req.body.body,
+        images: req.body.images,
+        tags: req.body.tags,
+        date: Date.parse(req.body.date)
     });
-
-    newPost.save()
-        .then(() => res.json('Post added!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+    Post.create(newPost)
+    console.log('Done!')
 });
 
-// May not need this :)
 router.route('/:id').get((req, res) => {
     Post.findById(req.params.id)
         .then(post => res.json(post))

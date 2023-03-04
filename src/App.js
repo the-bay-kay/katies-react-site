@@ -18,7 +18,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/posts/:id" element={<About />} />
+            <Route path="/posts/:id" element={<SinglePostView />} />
           </Routes>
         </div>
       </HashRouter>

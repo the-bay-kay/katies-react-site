@@ -23,12 +23,13 @@ export function Home() {
 
     const postList = 
         posts.length === 0 ? (
-            <div className="center">No posts yet</div>
+            <div className="center">Loading....</div>
         ) : (posts.map((post) => (
             <div className="post-preview" key={post.id}>
                 <h2>{post.title}</h2>
+                <p>{post._id}</p>
                 <p>
-                    temp
+                    hi<Link to={`/posts/${post._id}`}> </Link>
                 </p>
             </div>
         )));

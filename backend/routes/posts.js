@@ -4,6 +4,7 @@ let Post = require('../models/posts.model');
 // handles http get requests on the /posts/ url path
 // gets all posts within the database (not efficient for many posts? may rewrite)
 router.route('/').get((req, res) => {
+    console.log('a')
     Post.find()
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));

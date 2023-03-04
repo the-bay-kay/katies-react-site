@@ -45,6 +45,7 @@ router.route('/update/:id').post((req, res) => {
 
 
 router.route('/delete/:id').post((req, res) => {
+    console.log('Trying to delete....')
     Post.findByIdAndDelete(req.params.id)
         .then(() => res.json('Post deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));

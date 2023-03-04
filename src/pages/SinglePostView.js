@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -11,7 +11,6 @@ export function SinglePostView(props) {
 
     
     useEffect(() => {
-        console.log('hi!')
         axios
             .get(`http://localhost:5000/posts/${id}`)
             .then((response) => {
@@ -23,8 +22,9 @@ export function SinglePostView(props) {
     }, [id]);
 
     const onDelete = (id) => {
+        console.log('id: ', id);
         axios
-            .delete(`http://localhost:5000/posts/${id}`)
+            .post(`http://localhost:5000/posts/delete/${id}`)
             .then((response) => {
                 navigate('/');
              })
@@ -42,6 +42,7 @@ export function SinglePostView(props) {
                     <p>{post.content}</p>
                     <p>{post.tags}</p>
                     <p>{post.date}</p>
+                    <button onClick={() => onDelete(post._id)}>Delete</button>
                 </div>
             );
         } else {

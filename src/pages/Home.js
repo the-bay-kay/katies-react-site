@@ -26,7 +26,9 @@ export function Home() {
             <div className="center">Loading....</div>
         ) : (posts.map((post) => (
             <div className="post-preview" key={post._id}>
-                <h2><Link to={'/posts/${post._id}'}>{post.title}</Link> </h2>
+                <h2>
+                    <Link to={`/posts/${post._id}`}>{post.title}</Link>
+                </h2>
                 <p>{post._id}</p>
             </div>
         )));

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import React, { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -25,12 +25,9 @@ export function Home() {
         posts.length === 0 ? (
             <div className="center">Loading....</div>
         ) : (posts.map((post) => (
-            <div className="post-preview" key={post.id}>
-                <h2>{post.title}</h2>
+            <div className="post-preview" key={post._id}>
+                <h2><Link to={'/posts/${post._id}'}>{post.title}</Link> </h2>
                 <p>{post._id}</p>
-                <p>
-                    hi<Link to={`/posts/${post._id}`}> </Link>
-                </p>
             </div>
         )));
 

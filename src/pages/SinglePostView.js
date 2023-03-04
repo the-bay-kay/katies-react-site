@@ -39,10 +39,11 @@ export function SinglePostView(props) {
                 <div className="post">
                     <h2>{post.title}</h2>
                     <p>{post._id}</p>
-                    <p>{post.content}</p>
+                    <p>{post.body}</p>
                     <p>{post.tags}</p>
                     <p>{post.date}</p>
                     <button onClick={() => onDelete(post._id)}>Delete</button>
+                    <button onClick={() => navigate(`/posts/edit/${post._id}`)}>Edit</button>
                 </div>
             );
         } else {
@@ -57,7 +58,6 @@ export function SinglePostView(props) {
         <div>
             <h1>Single Post View</h1>
             <PostView />
-            <p> test</p>
         </div>
     );
 }

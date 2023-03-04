@@ -8,6 +8,7 @@ import { About } from './pages/About';
 import { Projects } from './pages/Projects';
 import { SinglePostView } from './pages/SinglePostView';
 import { CreatePost } from './pages/CreatePost';
+import { EditPost } from './pages/EditPost';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/posts/:id" element={<SinglePostView />} />
-            <Route path="/create" element={<CreatePost />} />
+            <Route path="/posts/create" element={<CreatePost />} />
+            <Route path="/posts/edit/:id" element={<EditPost />} />
           </Routes>
         </div>
       </HashRouter>

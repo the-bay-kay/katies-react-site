@@ -1,23 +1,43 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import axios from 'axios'
+import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-
-export function CreatePost() {
+export function EditPost(props) {
     const navigate = useNavigate();
+
     const [post, setPost] = useState({
         title: '',
         body: '',
-        tags: '',
+        images: [],
+        tags: [],
         date: new Date()
     });
 
+    const { id } = useParams();
+
+    useEffect(() => {
+        axios
+            .get(`http://localhost:5000/posts/${id}`)
+            .then((response) => {
+                setPost ({
+                    title: response.data.title,
+                    body: response.data.body,
+                    images: response.data.images,
+                    tags: response.data.tags,
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [id]);
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setPost({ ...post, [name]: value });
+        setPost({ ...post, [e.target.name]: e.target.value });
     }
 
     const handleSubmit = (e) => {
+        e.preventDefault();
+
         const newPost = {
             title: post.title,
             body: post.body,
@@ -25,19 +45,19 @@ export function CreatePost() {
             date: new Date()
         };
         axios
-            .post('http://localhost:5000/posts/add', newPost)
+            .post(`http://localhost:5000/posts/update/${id}`, newPost)
             .then((response) => {
-                navigate('/');
+                navigate('/'); // fix later
             })
             .catch((error) => {
                 console.log(error);
             });
         navigate('/');
     }
-
+    
     return (
         <div>
-            <h1>Create Post</h1>
+            <h1>Edit Post</h1>
             <form onSubmit={handleSubmit}>
                 <label>Title:</label>
                 <input
@@ -57,5 +77,4 @@ export function CreatePost() {
             </form>
         </div>
     )
-
 }

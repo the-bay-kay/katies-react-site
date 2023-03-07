@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { postURL } from '../components/Navbar';
 import axios from 'axios'
 
 
@@ -25,7 +26,7 @@ export function CreatePost() {
             date: new Date()
         };
         axios
-            .post('http://localhost:5000/posts/add', newPost)
+            .post(postURL + 'add', newPost)
             .then((response) => {
                 navigate('/');
             })

@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { postURL } from '../components/Navbar';
 import axios from 'axios';
 
 export function SinglePostView(props) {
@@ -12,7 +13,7 @@ export function SinglePostView(props) {
     
     useEffect(() => {
         axios
-            .get(`http://localhost:5000/posts/${id}`)
+            .get( postURL + String(id))
             .then((response) => {
                 setPost(response.data);
             })
@@ -24,7 +25,7 @@ export function SinglePostView(props) {
     const onDelete = (id) => {
         console.log('id: ', id);
         axios
-            .post(`http://localhost:5000/posts/delete/${id}`)
+            .post(postURL + `delete/` + String(id))
             .then((response) => {
                 navigate('/');
              })

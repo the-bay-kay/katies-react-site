@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { postURL } from '../components/Navbar';
 import axios from 'axios';
 
 export function EditPost(props) {
@@ -16,8 +17,9 @@ export function EditPost(props) {
     const { id } = useParams();
 
     useEffect(() => {
+
         axios
-            .get(`http://localhost:5000/posts/${id}`)
+            .get(postURL + String(id))
             .then((response) => {
                 setPost ({
                     title: response.data.title,
@@ -45,7 +47,7 @@ export function EditPost(props) {
             date: new Date()
         };
         axios
-            .post(`http://localhost:5000/posts/update/${id}`, newPost)
+            .post(postURL + `update/` + String(id), newPost)
             .then((response) => {
                 navigate('/'); // fix later
             })

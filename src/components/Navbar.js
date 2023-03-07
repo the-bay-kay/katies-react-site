@@ -16,4 +16,6 @@ export function Navbar() {
   );
 }
 
+export const postURL = 'http://localhost:5000/posts/';
+
 // why doesn't export default work?

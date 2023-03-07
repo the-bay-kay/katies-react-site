@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { postURL } from '../components/Navbar';
 import axios from 'axios';
-
+// should probably use proxy, but higher priorites, just want it working :)
 
 // Where the blogs go :)
 export function Home() {
@@ -11,7 +12,7 @@ export function Home() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:5000/posts/') // change hardcode later
+            .get(postURL) // change hardcode later
             .then((response) => {
                 setPosts(response.data);
             })

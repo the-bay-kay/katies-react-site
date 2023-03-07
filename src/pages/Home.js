@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-
 // Where the blogs go :)
 export function Home() {
     document.title = "Home";

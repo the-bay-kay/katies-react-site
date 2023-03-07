@@ -9,6 +9,7 @@ import { Projects } from './pages/Projects';
 import { SinglePostView } from './pages/SinglePostView';
 import { CreatePost } from './pages/CreatePost';
 import { EditPost } from './pages/EditPost';
+import { Login } from './pages/Login';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/posts/:id" element={<SinglePostView />} />

@@ -10,6 +10,7 @@ export function Navbar() {
             <li><Link to="/about">About</Link></li>
             <li><Link to="/projects">Projects</Link></li>
             <li><Link to="/posts/create">Create Post</Link></li>
+            <li><Link to="/login">Login</Link></li>
         </ul>
       </div>
     </nav>

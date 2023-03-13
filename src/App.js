@@ -1,5 +1,7 @@
 import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
+import { Cookies } from 'react-cookie';
 
 import { Navbar } from './components/Navbar';
 
@@ -12,22 +14,27 @@ import { EditPost } from './pages/EditPost';
 import { Login } from './pages/Login';
 
 function App() {
+  const cookies = new Cookies();
   return (
     <div>
-      <HashRouter>
-        <Navbar />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/posts/:id" element={<SinglePostView />} />
-            <Route path="/posts/create" element={<CreatePost />} />
-            <Route path="/posts/edit/:id" element={<EditPost />} />
-          </Routes>
-        </div>
-      </HashRouter>
+      <CookiesProvider>
+        <HashRouter>
+          <Navbar cookies={cookies} />
+          <div className="content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={
+                <Login cookies={cookies}/>
+                } />
+              <Route path="/about" element={<About />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/posts/:id" element={<SinglePostView />} />
+              <Route path="/posts/create" element={<CreatePost />} />
+              <Route path="/posts/edit/:id" element={<EditPost />} />
+            </Routes>
+          </div>
+        </HashRouter>
+      </CookiesProvider>
     </div>
   );
 }

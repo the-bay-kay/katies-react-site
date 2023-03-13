@@ -1,31 +1,53 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export function Login() {
+export function Login(props) {
+    const cookies = props.cookies 
+    const navigate = useNavigate();
     const [user, setUser] = useState({
         username: '',
         password: ''
     });
+   
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUser({ ...user, [name]: value });
     }
 
+    const handleLogout = () => {
+        console.log('Logging out...!')
+        cookies.remove('token');
+        
+    }
+
+    // Login
     const handleSubmit = (e) => {
         e.preventDefault();
         const newUser = {
             username: user.username,
             password: user.password
         };
+
         axios
-            .post('http://localhost:5000/auth/', newUser)
+            .post('http://localhost:5000/auth/', {user: newUser, cookies: cookies}, )
             .then((response) => {
-                window.alert('Logged in!');
+                console.log('ok', response)
+                cookies.set('token', response.data, { 
+                    path: '/',
+                    maxAge: 3600,
+                    SameSite: 'Lax',
+                    HttpOnly: true});
+                console.log(cookies.get('token') )
+                navigate('/');
+                window.location.reload();
             })
             .catch((error) => {
-                window.alert('Incorrect Login!');
+                window.alert('Invalid username or password!');
             });
+
+
     }
 
     return (
@@ -48,6 +70,7 @@ export function Login() {
                 />
                 <button type="submit">Submit</button>
             </form>
+            <button onClick={handleLogout}>Logout</button>
         </div>
     )
 }

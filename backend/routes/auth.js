@@ -2,7 +2,7 @@ const router = require('express').Router();
 require ('dotenv').config();
 
 const crypto = require('crypto');
-let adminName = process.env.USERNAME;
+let adminName = process.env.ADMIN_USERNAME;
 
 const hashPassword = (string) => {
     const salt = crypto.randomBytes(16).toString('hex');

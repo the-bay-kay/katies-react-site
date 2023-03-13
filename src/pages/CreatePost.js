@@ -1,28 +1,33 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { postURL } from '../components/Navbar';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // other options, check them out!
 import axios from 'axios'
 
+const quillModules = {
+    toolbar: [
+        [{ 'header': [1, 2, false] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
+        [{'script': 'sub'}, {'script': 'super'}],
+        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+        ['link', 'image'],
+        ['clean']
+    ],
+}
 
 export function CreatePost() {
     const navigate = useNavigate();
-    const [post, setPost] = useState({
-        title: '',
-        body: '',
-        tags: '',
-        date: new Date()
-    });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setPost({ ...post, [name]: value });
-    }
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    const [tags, setTags] = useState('');
 
     const handleSubmit = (e) => {
         const newPost = {
-            title: post.title,
-            body: post.body,
-            tags: post.tags,
+            title: title ,
+            body: body,
+            tags: tags,
             date: new Date()
         };
         axios
@@ -35,28 +40,24 @@ export function CreatePost() {
             });
         navigate('/');
     }
-
+    
     return (
         <div>
             <h1>Create Post</h1>
-            <form onSubmit={handleSubmit}>
-                <label>Title:</label>
-                <input
-                    type="title"
-                    name="title"
-                    value={post.title}
-                    onChange={handleChange}
+            <form>
+                <input type='title' 
+                    placeholder='Title' 
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}     
                 />
-                <label>Content:</label>
-                <input
-                    type="body"
-                    name="body"
-                    value={post.body}
-                    onChange={handleChange}
+                <input type='file' />
+                <ReactQuill value={body} modules={quillModules} />
+                <input type='tags'
+                    placeholder='#tag #tag2'
+                    value={tags}
+                    onChange={(e) => setTags(e.target.value)}
                 />
-                <button type="submit">Submit</button>
             </form>
         </div>
     )
-
 }

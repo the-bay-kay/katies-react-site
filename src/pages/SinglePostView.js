@@ -3,15 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { postURL } from '../components/Navbar';
 import axios from 'axios';
 
-export function SinglePostView(props) {
-
+export const SinglePostView = (props) => {
+    const cookies = props.cookies;
     const [post, setPost] = useState(null);
+    const [admin, setAdmin] = useState(false);
 
     const { id } = useParams();
     const navigate = useNavigate();
 
     
     useEffect(() => {
+        if('token' in cookies.getAll()) {
+            const token = cookies.get('token');
+            axios
+                .post('http://localhost:5000/auth/readCookie', {token: token})
+                .then((response) => {
+                    setAdmin(true);
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            }
+
+
         axios
             .get( postURL + String(id))
             .then((response) => {
@@ -23,15 +37,17 @@ export function SinglePostView(props) {
     }, [id]);
 
     const onDelete = (id) => {
-        console.log('id: ', id);
-        axios
-            .post(postURL + `delete/` + String(id))
-            .then((response) => {
-                navigate('/');
-             })
-            .catch((error) => {
-                console.log(error);
+        if(window.confirm('Are you sure you want to delete this post?')) {
+            axios
+                .post(postURL + `delete/` + String(id))
+                .then((response) => {
+                    navigate('/');
+                })
+                .catch((error) => {
+                    console.log(error);
             });
+        }
+        
     };
    
     function PostView() {
@@ -43,8 +59,12 @@ export function SinglePostView(props) {
                     <p>{post.body}</p>
                     <p>{post.tags}</p>
                     <p>{post.date}</p>
-                    <button onClick={() => onDelete(post._id)}>Delete</button>
-                    <button onClick={() => navigate(`/posts/edit/${post._id}`)}>Edit</button>
+                    {admin && 
+                        <button onClick={() => onDelete(post._id)}>Delete</button>
+                    }
+                    {admin &&
+                        <button onClick={() => navigate(`/posts/edit/${post._id}`)}>Edit</button>
+                    }
                 </div>
             );
         } else {

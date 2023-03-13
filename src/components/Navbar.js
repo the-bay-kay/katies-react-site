@@ -5,11 +5,10 @@ import { Logout } from './Logout';
 
 export const Navbar = (props) => {
   const cookies = props.cookies;
-  const allCookies = cookies.getAll();
 
   const [admin, setAdmin] = useState(false);
   useEffect(() => {
-    if('token' in allCookies) {
+    if('token' in cookies.getAll()) {
         const token = cookies.get('token');
             axios
               .post('http://localhost:5000/auth/readCookie', {token: token})
@@ -17,6 +16,7 @@ export const Navbar = (props) => {
                 setAdmin(true);
               })
               .catch((error) => {
+                console.log(error)
               });
       }
     

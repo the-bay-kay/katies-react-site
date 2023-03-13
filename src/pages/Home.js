@@ -5,16 +5,15 @@ import axios from 'axios';
 
 
 // Where the blogs go :)
-export function Home() {
-    document.title = "Home";
-
+export const Home = (props) => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
         axios
-            .get(postURL) // change hardcode later
+            .get(postURL)
             .then((response) => {
                 setPosts(response.data);
+                console.log(response.data.reverse())
             })
             .catch((error) => {
                 console.log(error);

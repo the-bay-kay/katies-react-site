@@ -28,7 +28,7 @@ function App() {
                 } />
               <Route path="/about" element={<About />} />
               <Route path="/projects" element={<Projects />} />
-              <Route path="/posts/:id" element={<SinglePostView />} />
+              <Route path="/posts/:id" element={<SinglePostView cookies={cookies} />} />
               <Route path="/posts/create" element={<CreatePost />} />
               <Route path="/posts/edit/:id" element={<EditPost />} />
             </Routes>

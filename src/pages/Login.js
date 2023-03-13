@@ -33,13 +33,11 @@ export function Login(props) {
         axios
             .post('http://localhost:5000/auth/', {user: newUser, cookies: cookies}, )
             .then((response) => {
-                console.log('ok', response)
                 cookies.set('token', response.data, { 
                     path: '/',
                     maxAge: 3600,
-                    SameSite: 'Lax',
+                    sameSite: 'Lax',
                     HttpOnly: true});
-                console.log(cookies.get('token') )
                 navigate('/');
                 window.location.reload();
             })

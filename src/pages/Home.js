@@ -13,7 +13,6 @@ export const Home = (props) => {
             .get(postURL)
             .then((response) => {
                 setPosts(response.data);
-                console.log(response.data.reverse())
             })
             .catch((error) => {
                 console.log(error);

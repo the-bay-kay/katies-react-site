@@ -1,63 +1,101 @@
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { postURL } from '../components/Navbar';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // other options, check them out!
-import axios from 'axios'
+import { useState, useEffect, useRef } from "react";
+import { postURL } from "../components/Navbar";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // other options, check them out!
+import axios from "axios";
 
 const quillModules = {
     toolbar: [
-        [{ 'header': [1, 2, false] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block'],
-        [{'script': 'sub'}, {'script': 'super'}],
-        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-        ['link', 'image'],
-        ['clean']
+        [{ header: [1, 2, false] }],
+        ["bold", "italic", "underline", "strike", "blockquote", "code-block"],
+        [{ script: "sub" }, { script: "super" }],
+        [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+        ],
+        ["link", "image"],
+        ["clean"],
     ],
-}
+};
 
-export function CreatePost() {
-    const navigate = useNavigate();
+export const CreatePost = () => {
+    const [title, setTitle] = useState("");
+    const [tags, setTags] = useState("");
+    const [body, setBody] = useState("");
 
-    const [title, setTitle] = useState('');
-    const [body, setBody] = useState('');
-    const [tags, setTags] = useState('');
+    const editorRef = useRef();
 
-    const handleSubmit = (e) => {
-        const newPost = {
-            title: title ,
-            body: body,
-            tags: tags,
-            date: new Date()
+    useEffect(() => {
+        let editor = editorRef.current.getEditor();
+        let observer;
+        const checkForNode = setInterval(() => {
+            const node = editorRef.current.getEditor().root;
+            if (node) {
+                observer = new MutationObserver(() => {
+                    setBody(editorRef.current.getEditor().root.innerHTML);
+                });
+                observer.observe(node, { childList: true, subtree: true });
+                clearInterval(checkForNode);
+            }
+        }, 100);
+
+        return () => {
+            if (observer) {
+                observer.disconnect();
+            }
+            clearInterval(checkForNode);
         };
-        axios
-            .post(postURL + 'add', newPost)
-            .then((response) => {
-                navigate('/');
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        navigate('/');
-    }
-    
+    }, []);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const postData = {
+            title,
+            tags,
+            body,
+        };
+        try {
+            await axios.post(postURL + "add", postData);
+            alert("Post added successfully!");
+            setTitle("");
+            setTags("");
+            setBody("");
+        } catch (error) {
+            alert("Error adding post: " + error.message);
+        }
+    };
+
     return (
-        <div>
-            <h1>Create Post</h1>
-            <form>
-                <input type='title' 
-                    placeholder='Title' 
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}     
-                />
-                <input type='file' />
-                <ReactQuill value={body} modules={quillModules} />
-                <input type='tags'
-                    placeholder='#tag #tag2'
-                    value={tags}
-                    onChange={(e) => setTags(e.target.value)}
-                />
-            </form>
-        </div>
-    )
-}
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="title">Title:</label>
+            <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+            />
+
+            <label htmlFor="tags">Tags:</label>
+            <input
+                type="text"
+                id="tags"
+                value={tags}
+                onChange={(event) => setTags(event.target.value)}
+            />
+
+            <input type="file" />
+
+            <label htmlFor="body">Body:</label>
+            <ReactQuill
+                ref={editorRef}
+                value={body}
+                onChange={setBody}
+                modules={quillModules}
+            />
+
+            <button type="submit">Submit</button>
+        </form>
+    );
+};

@@ -25,7 +25,7 @@ export const Home = (props) => {
         ) : (posts.map((post) => (
             <div className="post-preview" key={post._id}>
                 <h2>
-                    <Link to={`/posts/${post._id}`}>{post.title}</Link>
+                    <Link to={`/posts/${post._id}`}>{post.body}</Link>
                 </h2>
                 <p>{post._id}</p>
             </div>

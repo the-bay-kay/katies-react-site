@@ -24,11 +24,11 @@ export const CreatePost = () => {
     const [title, setTitle] = useState("");
     const [tags, setTags] = useState("");
     const [body, setBody] = useState("");
+    const [file, setFile] = useState(null);
 
     const editorRef = useRef();
 
     useEffect(() => {
-        let editor = editorRef.current.getEditor();
         let observer;
         const checkForNode = setInterval(() => {
             const node = editorRef.current.getEditor().root;
@@ -49,22 +49,39 @@ export const CreatePost = () => {
         };
     }, []);
 
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const postData = {
-            title,
-            tags,
-            body,
-        };
-        try {
-            await axios.post(postURL + "add", postData);
-            alert("Post added successfully!");
-            setTitle("");
-            setTags("");
-            setBody("");
-        } catch (error) {
-            alert("Error adding post: " + error.message);
+
+        var postData = new FormData();
+        postData.append("title", title);
+        postData.append("tags", tags);
+        postData.append("body", body);
+        if (!file) {
+            window.alert('Must upload a thumbnail!')
+            return
         }
+        postData.append("file", file);
+        const sendURL = postURL + '/add'
+
+        axios
+            .post(sendURL, postData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data; boundary=${postData._boundary}'
+                }})
+            .then((response) => {
+                window.alert("Post added successfully!")
+                    setTitle("");
+                    setTags("");
+                    setBody("");
+                    setFile(null);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
@@ -77,6 +94,9 @@ export const CreatePost = () => {
                 onChange={(event) => setTitle(event.target.value)}
             />
 
+            <label htmlFor="file">File:</label>
+            <input type="file" id="file" onChange={handleFileChange} />
+
             <label htmlFor="tags">Tags:</label>
             <input
                 type="text"
@@ -84,8 +104,6 @@ export const CreatePost = () => {
                 value={tags}
                 onChange={(event) => setTags(event.target.value)}
             />
-
-            <input type="file" />
 
             <label htmlFor="body">Body:</label>
             <ReactQuill
@@ -95,6 +113,7 @@ export const CreatePost = () => {
                 modules={quillModules}
             />
 
+            
             <button type="submit">Submit</button>
         </form>
     );

@@ -24,6 +24,10 @@ app.use('/auth', authRouter);
 
 app.use(cookieParser());
 
+const multer = require("multer");
+const uploadMiddleware = multer({ dest: "uploads/" });
+
+app.use(uploadMiddleware.single("file"));
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

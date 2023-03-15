@@ -1,5 +1,16 @@
 const router = require('express').Router();
 let Post = require('../models/posts.model');
+const multer = require("multer");
+const uploadMiddleware = multer({ dest: "uploads/" });
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + '-' + file.originalname);
+    }
+  });
+const upload = multer({ storage: storage });
 
 // handles http get requests on the /posts/ url path
 // gets all posts within the database (not efficient for many posts? may rewrite)
@@ -9,14 +20,19 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/add').post((req, res) => {
-    let newPost = new Post({
+router.route('/add').post(upload.single('file'), (req, res) => {
+    console.log(req.body)
+    console.log(req.file)
+    const newPost = new Post({
         title: req.body.title,
         body: req.body.body,
-        images: req.body.images,
         tags: req.body.tags,
-        date: Date.parse(req.body.date)
+        thumbnail: req.file.path,
+        date: new Date(),
     });
+
+    console.log(newPost)
+
     Post.create(newPost)
     console.log('Done!')
 });
@@ -30,10 +46,7 @@ router.route('/:id').get((req, res) => {
 router.route('/update/:id').post((req, res) => {
     Post.findById(req.params.id)
         .then(post => {
-            post.title = req.body.title;
-            post.body = req.body.body;
-            post.images = req.body.images;
-            post.tags = req.body.tags;
+            post.postObj = req.body.postObj;
             post.date = Date.parse(req.body.date);
 
             post.save()
@@ -50,6 +63,5 @@ router.route('/delete/:id').post((req, res) => {
         .then(() => res.json('Post deleted.'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-
 
 module.exports = router;

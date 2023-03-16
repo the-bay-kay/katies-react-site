@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 // Where the blogs go :)
-export const Home = (props) => {
+export const Blog = (props) => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -33,7 +33,7 @@ export const Home = (props) => {
 
     return (
         <div>
-            <h1>Home</h1>
+            <h1>Katie's Blog</h1>
             <div className="posts">
                 {postList}
             </div>

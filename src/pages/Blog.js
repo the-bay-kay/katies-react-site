@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { postURL } from '../components/Navbar';
 import axios from 'axios';
+import ReactTimeAgo from 'react-time-ago';
 
 
 // Where the blogs go :)
@@ -24,21 +25,19 @@ export const Blog = (props) => {
             <div className="center">Loading....</div>
         ) : (posts.map((post) => (
             <div className="post-preview" key={post._id}>
-                <h2>
-                    <Link to={`/posts/${post._id}`}>{post.body}</Link>
-                </h2>
-                <p>{post._id}</p>
+                <h2 className="post-title">{post.title}</h2>
+                    <Link to={`/posts/${post._id}`}>Read More</Link>
+                    <br />
+                    <ReactTimeAgo date={new Date(post.date)} />
             </div>
         )));
 
     return (
         <div>
             <h1>Katie's Blog</h1>
-            <div className="posts">
+            <div>
                 {postList}
             </div>
-            <p> text</p>
-
         </div>
     );
 }

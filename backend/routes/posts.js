@@ -37,6 +37,9 @@ router.route('/add').post(upload.single('file'), (req, res) => {
     console.log('Done!')
 });
 
+// I should proably add a middleware route to authenticate cookies 
+// before allowing the user to edit or delete a post :)
+
 router.route('/:id').get((req, res) => {
     Post.findById(req.params.id)
         .then(post => res.json(post))

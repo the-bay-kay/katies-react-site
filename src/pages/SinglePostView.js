@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { postURL } from '../components/Navbar';
+import DOMPurify from 'dompurify';
 import axios from 'axios';
 
 export const SinglePostView = (props) => {
@@ -49,14 +50,13 @@ export const SinglePostView = (props) => {
         }
         
     };
-   
+
     function PostView() {
         if (post) {
             return (
                 <div className="post">
                     <h2>{post.title}</h2>
-                    <p>{post._id}</p>
-                    <p>{post.body}</p>
+                    <div dangerouslySetInnerHTML={{ __html: (DOMPurify.sanitize(post.body))}}></div>
                     <p>{post.tags}</p>
                     <p>{post.date}</p>
                     {admin && 
@@ -73,7 +73,6 @@ export const SinglePostView = (props) => {
             );
         }
     }
-
 
     return (
         <div>

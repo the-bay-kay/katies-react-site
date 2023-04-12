@@ -26,7 +26,7 @@ router.route('/add').post(upload.single('file'), (req, res) => {
     const newPost = new Post({
         title: req.body.title,
         body: req.body.body,
-        tags: req.body.tags,
+        tags: req.body.tags.split(',') || [],
         thumbnail: req.file.path,
         date: new Date(),
     });

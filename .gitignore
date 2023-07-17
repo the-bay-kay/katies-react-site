@@ -5,10 +5,8 @@
 /.pnp
 .pnp.js
 backend/.env
-*.jpg
-*.JPG
-*.png
-*.PNG
+# Image Files: 
+*/uploads
 # testing
 /coverage
 

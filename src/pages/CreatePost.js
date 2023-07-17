@@ -3,6 +3,7 @@ import { postURL } from "../components/Navbar";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // other options, check them out!
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const quillModules = {
     toolbar: [
@@ -27,6 +28,8 @@ export const CreatePost = () => {
     const [file, setFile] = useState(null);
 
     const editorRef = useRef();
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         let observer;
@@ -53,7 +56,7 @@ export const CreatePost = () => {
         setFile(event.target.files[0]);
     };
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
 
         var postData = new FormData();
@@ -72,14 +75,16 @@ export const CreatePost = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data; boundary=${postData._boundary}'
                 }})
-            .then((response) => {
+            .then(() => {
                 window.alert("Post added successfully!")
-                    setTitle("");
-                    setTags("");
-                    setBody("");
-                    setFile(null);
+                setTitle("");
+                setTags("");
+                setBody("");
+                setFile(null);
+                navigate('/');
             })
             .catch((error) => {
+                window.alert('Error Creating Post!')
                 console.log(error);
             });
     };

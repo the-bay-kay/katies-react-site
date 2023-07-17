@@ -31,9 +31,10 @@ router.route('/add').post(upload.single('file'), (req, res) => {
     });
 
     console.log(newPost)
-
+    
     Post.create(newPost)
-    console.log('Done!')
+        .then(() => res.status(200).json('Post added successfully!')) 
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // I should proably add a middleware route to authenticate cookies 

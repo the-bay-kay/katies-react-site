@@ -2,7 +2,24 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { postURL } from '../components/Navbar';
 import axios from 'axios';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
+const quillModules = {
+    toolbar: [
+        [{ header: [1, 2, false] }],
+        ["bold", "italic", "underline", "strike", "blockquote", "code-block"],
+        [{ script: "sub" }, { script: "super" }],
+        [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+        ],
+        ["link", "image"],
+        ["clean"],
+    ],
+};
 export function EditPost(props) {
     const navigate = useNavigate();
 
@@ -17,7 +34,6 @@ export function EditPost(props) {
     const { id } = useParams();
 
     useEffect(() => {
-
         axios
             .get(postURL + String(id))
             .then((response) => {
@@ -33,8 +49,8 @@ export function EditPost(props) {
             });
     }, [id]);
 
-    const handleChange = (e) => {
-        setPost({ ...post, [e.target.name]: e.target.value });
+    const handleChange = (value) => {
+        setPost({ ...post, body: value });
     }
 
     const handleSubmit = (e) => {
@@ -66,14 +82,13 @@ export function EditPost(props) {
                     type="title"
                     name="title"
                     value={post.title}
-                    onChange={handleChange}
+                    onChange={(e) => setPost({ ...post, title: e.target.value })}
                 />
                 <label>Content:</label>
-                <input
-                    type="body"
-                    name="body"
+                <ReactQuill
                     value={post.body}
                     onChange={handleChange}
+                    modules={quillModules}
                 />
                 <button type="submit">Submit</button>
             </form>

@@ -7,7 +7,8 @@
 backend/.env
 *.jpg
 *.JPG
-
+*.png
+*.PNG
 # testing
 /coverage
 

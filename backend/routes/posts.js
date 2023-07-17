@@ -21,8 +21,7 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post(upload.single('file'), (req, res) => {
-    console.log(req.body)
-    console.log(req.file)
+    console.log('Addding post...')
     const newPost = new Post({
         title: req.body.title,
         body: req.body.body,

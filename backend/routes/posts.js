@@ -53,7 +53,7 @@ router.route('/update/:id').post((req, res) => {
             post.date = Date.parse(req.body.date);
 
             post.save()
-                .then(() => res.json('Post updated!'))
+                .then(() => res.status(200).json('Post updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));

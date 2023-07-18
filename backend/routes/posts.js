@@ -46,15 +46,17 @@ router.route('/:id').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/update/:id').post((req, res) => {
+router.route('/update/:id').post(upload.none(), (req, res) => {
     Post.findById(req.params.id)
         .then(post => {
-            post.postObj = req.body.postObj;
-            post.date = Date.parse(req.body.date);
-
+            post.title = req.body.title
+            post.body = req.body.body
+            post.tags = req.body.tags.split(',') || []
             post.save()
                 .then(() => res.status(200).json('Post updated!'))
-                .catch(err => res.status(400).json('Error: ' + err));
+                .catch(err => {
+                    console.log(err);
+                    res.status(400).json('Error: ' + err)});
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });

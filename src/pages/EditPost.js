@@ -26,10 +26,8 @@ export function EditPost(props) {
     const [title, setTitle] = useState("");
     const [tags, setTags] = useState("");
     const [body, setBody] = useState("");
-    const [file, setFile] = useState(null);
 
     const editorRef = useRef();
-
 
     const { id } = useParams();
 
@@ -40,7 +38,6 @@ export function EditPost(props) {
                 setTitle(response.data.title);
                 setTags(response.data.tags);
                 setBody(response.data.body);
-                setFile(response.data.file);
             })
             .catch((error) => {
                 console.log(error);
@@ -65,31 +62,33 @@ export function EditPost(props) {
         };
     }, [id]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
 
         var postData = new FormData();
         postData.append("title", title);
         postData.append("tags", tags);
         postData.append("body", body);
-        postData.append("file", file);
-        const sendURL = postURL + '/edit'
-
-
+        console.log(postData);
         axios
-            .post(postURL + `update/` + String(id), postData)
+            .post(postURL + `update/` + String(id), postData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
             .then((response) => {
+                window.alert("Post successfully updated!");
                 navigate("/");
             })
             .catch((error) => {
+                window.alert("Error updatingg post!");
                 console.log(error);
             });
-        navigate("/");
     };
 
     return (
         <form onSubmit={handleSubmit}>
-            <label htmlFor="title">Title:</label> 
+            <label htmlFor="title">Title:</label>
             <input
                 type="text"
                 id="title"
@@ -112,6 +111,7 @@ export function EditPost(props) {
                 onChange={setBody}
                 modules={quillModules}
             />
+
             <button type="submit">Submit</button>
         </form>
     );

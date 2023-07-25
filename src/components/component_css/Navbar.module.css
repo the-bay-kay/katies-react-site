@@ -8,7 +8,6 @@
     display: flex;
     justify-content: space-between; 
     align-items: center;
-
 }
 
 .navHeader ul {
@@ -18,11 +17,11 @@
     margin: 0;
     padding: 0;
     list-style: none;
-
 }
 
 .navHeader a {
     text-decoration: none;
+    font-size: 1.5em;
     color: #FFEBE0;
     padding: 0.5em;
 }

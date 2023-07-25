@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Logout } from './Logout';
 
-import NavbarCSS from './Navbar.module.css'
+import NavbarCSS from './component_css/Navbar.module.css'
 import katieLogo  from '../images/MainLink.svg'
 import InstaHeader from '../images/InstaHeader.svg'
 import LinkedinHeader from '../images/LinkedinHeader.svg'

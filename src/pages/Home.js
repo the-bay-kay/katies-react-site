@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-
-import { aboutMeBlurb } from './About';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import HomeCSS from './page_css/Home.module.css'
 import WavesTop from '../images/wavesOpacity.svg'
@@ -8,12 +8,24 @@ import heroPhoto from '../images/CenterSplash/HeroPhoto.JPEG'
 
 export function Home() {
     document.title = "Home";
-
-    let blurb = aboutMeBlurb.substring(0, 320);
-    let lastWhitespaceIndex = blurb.lastIndexOf(' ');
-    const aboutBlurb = blurb.substring(0, lastWhitespaceIndex) + '...';
     
+    const [about, setAbout] = useState('');
 
+    useEffect(() => {
+        axios
+            .get('http://localhost:5000/content/about')
+            .then((response) => {
+                /* Take the about page, get a preview of first paragraph */
+                let blurb = response.data.body[0].join(' ').substring(0,245);
+                let lastWhitespaceIndex = blurb.lastIndexOf(' ');
+                setAbout(blurb.substring(0, lastWhitespaceIndex) + '...');
+            })
+            .catch((error) => {
+                setAbout('Error!');
+            })
+    })
+    
+        
     return (
         <div>
             {/* Main Hero Splash*/}
@@ -31,7 +43,7 @@ export function Home() {
                     <div className={HomeCSS.leftBlurbWrapper}>
                         <div className={HomeCSS.blurbBox}>
                             <h2>About Me</h2>
-                            <p>{aboutBlurb}</p>
+                            <p>{about}</p>
                             <div class={HomeCSS.buttonContainer}> {/* Extra Div prevents whole grid cell from being a link */}
                                 <Link to="/about">
                                     <button>More</button>

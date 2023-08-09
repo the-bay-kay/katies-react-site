@@ -1,0 +1,61 @@
+/* Second Section of Homepage: Text Blurbs*/
+.blurb {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-image: url('/src/images/iceplant_purple_flipped.JPG');
+    background-size: cover;
+    background-position: center;
+}
+
+.blurbContainer {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-template-rows: 3em auto 3em auto 3em;
+
+}
+
+.blurbContainer button {
+    text-align: center;
+    color: var(--secondary-color);
+    padding: 0.5em;
+
+    border-style: none;
+    border-radius: 0.5em;
+    background-color: var(--primary-color); 
+}
+
+
+.leftBlurbWrapper {
+    padding: 0em 0.75em 0em 0em;
+    grid-column-start: 2;
+    grid-row-start: 2;
+
+    width: 30em;
+}
+
+.rightBlurbWrapper {
+    width: 36em;
+    grid-row-start: 2;
+    grid-column-start: 4;
+}
+
+.blurbBox{
+    display:grid;
+    padding: 2em;
+    
+    background-color: var(--secondary-color);
+    border-radius: 1em;
+}
+
+.blurbBox h2 {
+    justify-self: top left; 
+    line-height: 0;
+}
+
+.buttonContainer {
+    display:grid;
+    justify-content: right;
+    padding: 0em 1em 0em 0em;
+}

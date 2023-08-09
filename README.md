@@ -1,5 +1,8 @@
 
 ## Katie's Personal Website
+
+![Katie's Website Homepage](https://raw.githubusercontent.com/the-bay-kay/katies-react-site/main/Website%20Preview.png)
+
 Hey there!  My name's Katie, and this is the code for my portfolio site.  It's still in development, but I've been
 working hard on making sure it's the best it can be! Here's a few highlights to get you started:
 

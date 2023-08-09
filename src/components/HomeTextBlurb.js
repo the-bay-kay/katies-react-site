@@ -5,7 +5,7 @@ import axios from 'axios';
 import HomeCSS from '../pages/page_css/Home.module.css'
 import Blurbs from './component_css/Blurbs.module.css'
 
-import WavesTop from '../images/wavesOpacity.svg'
+import Waves from '../images/wavesOpacity.svg'
 
 export const HomeTextBlurbs = (props) => {
     const [about, setAbout] = useState('');
@@ -25,7 +25,7 @@ export const HomeTextBlurbs = (props) => {
     })
     return (
              <section className={Blurbs.blurb}>
-                <img className={HomeCSS.waveDivider} src={WavesTop} alt='Test'/>
+                <img className={HomeCSS.waveDivider} src={Waves} alt='Waves facing upward, dividing the section.'/>
                 <div className={Blurbs.blurbContainer}>
                     <div className={Blurbs.leftBlurbWrapper}>
                         <div className={Blurbs.blurbBox}>
@@ -45,6 +45,7 @@ export const HomeTextBlurbs = (props) => {
                         </div>
                     </div>
                 </div>
+                <img className={HomeCSS.waveDividerBottom} src={Waves} alt='Waves facing upward, dividing the section.'/>
             </section>
     )
 }

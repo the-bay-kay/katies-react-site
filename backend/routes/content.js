@@ -16,7 +16,6 @@ const router = require('express').Router();
 var about = require('../content/about.json');
 
 router.route('/about').get((req, rest) => {
-    console.log(about)
     rest.status(202).json(about);
 })
 

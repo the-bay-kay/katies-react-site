@@ -22,7 +22,17 @@
     height:5em; 
 }
 
+/* "subclassing" the WaveDivider bottom as .waveDivider .bottom didn't
+ *work, so I made them two separate versions.  Don't love it, but it works.
+ */
+
 .waveDivider {
     width: 100%;
     height:10em;
+}
+
+.waveDividerBottom {
+    width: 100%;
+    height:10em;
+    transform: rotateX(180deg);
 }

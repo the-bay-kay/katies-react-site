@@ -19,8 +19,10 @@ mongoose.connection.once('open', () => {
 
 const postsRouter = require('./routes/posts');
 const authRouter = require('./routes/auth');
+const contentRouter = require('./routes/content');
 app.use('/posts', postsRouter);
 app.use('/auth', authRouter);
+app.use('/content', contentRouter);
 
 app.use(cookieParser());
 

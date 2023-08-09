@@ -13,6 +13,8 @@ Thanks for checking out my site!  If you have any questions, feel free to contac
 
 ## React Boilerplate
 
+![Preview of the website homepage](WebsitePreview.png)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:

@@ -1,0 +1,28 @@
+/* First Panel: Image Splash*/
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heroImageWrapper {
+    display: grid;
+    box-shadow: inset 10em, 10em, 10em, 10em;
+}
+
+.splashImage {
+    width: 55em;
+    height: 30em;
+    border-radius: 2.5em;
+}
+
+.sectionBuffer{
+    display:grid;
+    width: 100%;
+    height:5em; 
+}
+
+.waveDivider {
+    width: 100%;
+    height:10em;
+}

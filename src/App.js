@@ -5,6 +5,7 @@ import { Cookies } from 'react-cookie';
 
 import { Navbar } from './components/Navbar';
 
+import { Home } from './pages/Home';
 import { Blog } from './pages/Blog';
 import { About } from './pages/About';
 import { Projects } from './pages/Projects';
@@ -22,7 +23,8 @@ function App() {
           <Navbar cookies={cookies} />
           <div className="content">
             <Routes>
-              <Route path="/" element={<Blog />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/blog" element={<Blog />} />
               <Route path="/login" element={
                 <Login cookies={cookies}/>
                 } />

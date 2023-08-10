@@ -1,4 +1,5 @@
 import { HomeTextBlurbs } from '../components/HomeTextBlurb.js'
+import { HomePortfolio } from '../components/HomePortfolio.js';
 
 import HomeCSS from './page_css/Home.module.css'
 
@@ -20,6 +21,7 @@ export function Home() {
             <div className={HomeCSS.sectionBuffer}/>
             <HomeTextBlurbs /> 
             {/* Portfolio */}
+            <HomePortfolio />
             {/* Contact Me */}
         </div>
 
